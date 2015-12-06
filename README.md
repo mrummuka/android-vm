@@ -83,6 +83,9 @@ _Note: All the software needed is automatically downloaded as it is needed.  Sev
 	For VMware Workstation
 	
 		$ vagrant up --provider=vmware_workstation 
+		
+   For Virtualbox
+      $ vagrant up --provider=virtualbox
 
 	_Note: As the Android VM build runs you will see various types of screen output from Vagrant, Chef and Shell scripts -- some of the dependency downloads and compilations require a bit of time.  Again, Patience is a virtue._
 3. Once the Android VM build provisioning process is complete, run the following to login via SSH,
@@ -199,3 +202,15 @@ If you are interested in the other options Vagrant offers, please see the man he
 3. [Chef Cookbooks](http://community.opscode.com/cookbooks)
 
 
+### Known issues
+1. Virtualbox displays the following message after vagrant up
+==> default: Detected Chef (latest) is already installed
+Shared folders that Chef requires are missing on the virtual machine.
+This is usually due to configuration changing after already booting the
+machine. The fix is to run a `vagrant reload` so that the proper shared
+folders will be prepared and mounted on the VM.
+
+FIX (as in http://stackoverflow.com/questions/27975541/vagrant-chef-error-in-provision-shared-folders-that-chef-requires-are-missin)
+$ rm .vagrant/machines/default/virtualbox/synced_folders 
+$ vagrant reload --provision
+)
